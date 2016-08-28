@@ -104,7 +104,8 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input id="keyword" name="keyword" placeholder="" class="form-control form-dashboard" type="text" value="" autocomplete="off">
+                                    <input id="keyword" name="keyword" placeholder=""
+                                           class="form-control form-dashboard" type="text" value="" autocomplete="off">
                                 </div>
                                 <button href="#" class="btn btn-default btn-search btn-sm" role="submit">
                                     검색
@@ -116,57 +117,79 @@
                     </div>
 
                     <table class="panel-body table table-hover table-bordered">
-                            <thead>
-                            <tr>
-                                <th>id</th>
-                                <th>name</th>
-                                <th>mac</th>
-                                <th>lag</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>테스트1</td>
-                                <td>12:12:12:12:12:12</td>
-                                <td>32:127</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>테스트2</td>
-                                <td>12:12:12:12:12:12</td>
-                                <td>32:127</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>테스트3</td>
-                                <td>12:12:12:12:12:12</td>
-                                <td>32:127</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>테스트4</td>
-                                <td>12:12:12:12:12:12</td>
-                                <td>32:127</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>테스트5</td>
-                                <td>12:12:12:12:12:12</td>
-                                <td>32:127</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>name</th>
+                            <th>mac</th>
+                            <th>lag</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr data-id="1" onclick="panTo(this);">
+                            <td>1</td>
+                            <td>테스트1</td>
+                            <td>12:12:12:12:12:12</td>
+                            <td>32:127</td>
+                        </tr>
+                        <tr data-id="2" onclick="panTo(this);">
+                            <td>2</td>
+                            <td>테스트2</td>
+                            <td>12:12:12:12:12:12</td>
+                            <td>32:127</td>
+                        </tr>
+                        <tr data-id="3" onclick="panTo(this);">
+                            <td>3</td>
+                            <td>테스트3</td>
+                            <td>12:12:12:12:12:12</td>
+                            <td>32:127</td>
+                        </tr>
+                        <tr data-id="4" onclick="panTo(this);">
+                            <td>4</td>
+                            <td>테스트4</td>
+                            <td>12:12:12:12:12:12</td>
+                            <td>32:127</td>
+                        </tr>
+                        <tr data-id="5" onclick="panTo(this);">
+                            <td>5</td>
+                            <td>테스트5</td>
+                            <td>12:12:12:12:12:12</td>
+                            <td>32:127</td>
+                        </tr>
+                        </tbody>
+                    </table>
 
                 </div>
 
             </div>
+            <div class="row">
+                <nav class="text-center">
+                    <!-- Add class .pagination-lg for larger blocks or .pagination-sm for smaller blocks-->
+                    <ul class="pagination">
+                        <li class="disabled"><a href="#">&lt;&lt;</a></li>
+                        <li class="disabled"><a href="#">&lt;</a></li>
+                        <li class="active"><a href="#">1</a>
+                        </li>
+                        <li class="disabled"><a href="#">&gt;</a></li>
+                        <li class="disabled"><a href="#">&gt;&gt;</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
         <div id="map" class="col-lg-6 mycol mycol-right"></div>
     </div>
-
 </div>
 <!-- /.container -->
+
+<div id="windowInfo" class="thumbnail clearfix" style="width: 300px;">
+    <img src="http://www.everland.com/mobile/images/everland_favicon.png" class="pull-left" style="width: 70px">
+    <div class="caption">
+        <a href="http://www.everland.com/mobile/beacon/miniature.html" target="_blank">
+            <h4>Everland Audio Guide</h4>
+        </a>
+        <div class="card-desc">From window info</div>
+    </div>
+</div>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
@@ -174,14 +197,82 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script type="text/javascript"
-        src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=e3EdgxcePjwgytVPYIt8"></script>
+        src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=PzOLX7m6UkYYh9exOkSf"></script>
+<!--<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=e3EdgxcePjwgytVPYIt8"></script>-->
 <script>
+    var position = new naver.maps.LatLng(37.2932127, 127.2014288);
     var mapOptions = {
-        center: new naver.maps.LatLng(37.3595704, 127.105399),
-        zoom: 10
+        center: position,
+        zoom: 11
     };
 
     var map = new naver.maps.Map('map', mapOptions);
+
+    var mapData = {
+        1: {lat: "37.2942127", lng: "127.2014288"},
+        2: {lat: "37.2952127", lng: "127.2054288"},
+        3: {lat: "37.2962127", lng: "127.2104288"},
+        4: {lat: "37.2972127", lng: "127.2154288"},
+        5: {lat: "37.2982127", lng: "127.2204288"}
+    };
+
+    var infoDiv = document.getElementById("windowInfo");
+    var infowindow = new naver.maps.InfoWindow({
+        content: infoDiv
+    });
+
+    for (var key in mapData) {
+        if (mapData.hasOwnProperty(key)) {
+            console.log(key + " -> " + mapData[key]);
+            var lat = mapData[key].lat;
+            var lng = mapData[key].lng;
+
+            var markerOptions = {
+                position: new naver.maps.LatLng(lat, lng),
+                map: map,
+                icon: './img/pin_default.png'
+            };
+
+            var marker = new naver.maps.Marker(markerOptions);
+
+            naver.maps.Event.addListener(marker, "click", function (e) {
+                if (infowindow.getMap()) {
+                    infowindow.setContent(windowInfo);
+                    infowindow.close();
+                } else {
+                    infowindow.open(map, marker);
+                }
+
+            });
+        }
+    }
+
+    var markerList = [];
+    var menuLayer = $('<div style="position:absolute;z-index:10000;background-color:#fff;border:solid 1px #333;padding:10px;display:none;"></div>');
+
+    map.getPanes().floatPane.appendChild(menuLayer[0]);
+
+    naver.maps.Event.addListener(map, 'mousedown', function(e) {
+        menuLayer.hide();
+    });
+
+    naver.maps.Event.addListener(map, 'rightclick', function(e) {
+        var coordHtml = 'Coord: '+ e.coord +'<br />Point: '+ e.point +'<br />Offset: '+ e.offset;
+
+        menuLayer.show().css({
+            left: e.offset.x,
+            top: e.offset.y
+        }).html(coordHtml);
+    });
+
+    function panTo(ele) {
+        var id = $(ele).data('id')
+        var lat = mapData[id].lat;
+        var lng = mapData[id].lng;
+
+        map.panTo(new naver.maps.LatLng(lat, lng));
+    }
+
 </script>
 </body>
 </html>
